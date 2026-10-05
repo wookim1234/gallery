@@ -1,0 +1,31 @@
+name: Build APK v2
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Check folders
+        run: |
+          ls -la Android
+          ls -la Android/src
+
+      - name: Build debug APK
+        run: |
+          cd Android/src
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: app-debug
+          path: Android/src/**/build/outputs/apk/debug/*.apk
