@@ -14,10 +14,15 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Build debug APK
-        working-directory: Android
+      - name: Check folders
         run: |
-          chmod +x ./gradlew
+          ls -la
+          ls -la Android
+
+      - name: Build debug APK
+        run: |
+          cd Android
+          chmod +x gradlew
           ./gradlew assembleDebug
 
       - uses: actions/upload-artifact@v4
